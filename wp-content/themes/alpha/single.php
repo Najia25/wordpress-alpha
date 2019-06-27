@@ -10,8 +10,9 @@ if(is_active_sidebar("footer-left"))
 ?>
 
 <?php get_header(); ?>
+
 <body <?php body_class(); ?>>
-<?php get_template_part( "/template-parts/common/hero" ); ?>
+    <?php get_template_part( "/template-parts/common/hero" ); ?>
     <div class="container">
         <div class="row">
             <div class="<?php echo $alpha_layout_class; ?>">
@@ -20,23 +21,41 @@ if(is_active_sidebar("footer-left"))
                     while ( have_posts() ) :
                         the_post();
                         ?>
-                        <div <?php post_class(); ?>>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12 <?php echo $alpha_text_class; ?>">
-                                        <h2 class="post-title">
-                                            <?php the_title(); ?>
-                                        </h2>
-                                        <p class="">
-                                            <em><?php the_author_posts_link(); ?></em><br/>
-                                            <?php echo get_the_date(); ?>
-                                        </p>
-                                    </div>
+                    <div <?php post_class(); ?>>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 <?php echo $alpha_text_class; ?>">
+                                    <h2 class="post-title">
+                                        <?php the_title(); ?>
+                                    </h2>
+                                    <p class="">
+                                        <em><?php the_author_posts_link(); ?></em><br />
+                                        <?php echo get_the_date(); ?>
+                                    </p>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="slider">
+                                        <?php $attachments = new Attachments( 'attachments' ); /* pass the instance name */
+                                           if( $attachments->exist() ){
+                                                while( $attachment = $attachments->get() ) {
+                                                    ?>
+                                        <div>
                                             <?php
+                                                 echo $attachments->image
+                                                 ?>
+                                        </div>
+                                        </li>
+                                        <?php
+                                                 } 
+                                                ?>
+                                        </ul>
+                                        <?php }
+                                            ?>
+                                    </div>
+                                    <p>
+                                        <?php
                                             if ( has_post_thumbnail() ) {
                                                 $thumbnail_url = get_the_post_thumbnail_url(null,"large");
                                                 printf( '<a class="popup" href="%s" data-featherlight="image">',$thumbnail_url);
@@ -49,26 +68,26 @@ if(is_active_sidebar("footer-left"))
                                             wp_link_pages();
 
                                             ?>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-10 offset-md-1">
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                    </p>
+                                </div>
+                                <div class="col-md-10 offset-md-1">
+                                    <div class="row">
+                                        <div class="col-md-4">
 
-                                            </div>
-                                            <div class="col-md-8"></div>
                                         </div>
+                                        <div class="col-md-8"></div>
                                     </div>
-                                    <?php if ( comments_open() ): ?>
-                                        <div class="col-md-10 offset-md-1">
-                                            <?php
+                                </div>
+                                <?php if ( comments_open() ): ?>
+                                <div class="col-md-10 offset-md-1">
+                                    <?php
                                             //comments_template();
                                             ?>
-                                        </div>
-                                    <?php endif; ?>
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
+                    </div>
                     <?php
                     endwhile;
                     ?>
@@ -99,5 +118,4 @@ if(is_active_sidebar("footer-left"))
         </div>
     </div>
 
-<?php get_footer(); ?>
-
+    <?php get_footer(); ?>
