@@ -26,6 +26,38 @@ get_header();
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                    <h2 class="mb-4 text-center"><?php _e('Testimonials','alpha'); ?></h2>
+                        <div class="testimonials slider text-center ">
+                            <?php
+                                if ( class_exists( 'Attachments' ) ) {
+                                    $attachments = new Attachments( 'testimonials' );
+                                    if ( $attachments->exist() ) {
+                                        while ( $attachment = $attachments->get() ) { ?>
+                                            <div>
+                                                <p>
+                                                <?php echo $attachments->image( 'thumbnail' ); ?>                                                           
+                                            </p>
+                                            <p>
+                                            <?php echo $attachments->field( 'testimonial' ); ?>   
+                                            </p>
+                                            <p>
+                                            <?php echo $attachments->field( 'name' ); ?>   
+                                            </p>
+                                            <p>
+                                            <?php echo $attachments->field( 'position' ); ?>
+                                            at <strong> <a href="<?php echo $attachments->field( 'companywebsite' ); ?>"><?php echo $attachments->field( 'company' ); ?></a></strong>   
+                                            </p>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                }
+                                ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <p>
                             <?php

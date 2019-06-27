@@ -1,18 +1,15 @@
 <?php
-$alpha_layout_class = "col-md-10 offset-md-1";
-$alpha_text_class = "text-center";
-
-if(is_active_sidebar("footer-left"))
-{
-    $alpha_layout_class = "col-md-8";
-    $alpha_text_class = "";
+$alpha_layout_class = "col-md-8";
+$alpha_text_class   = "";
+if ( ! is_active_sidebar( "sidebar-1" ) ) {
+    $alpha_layout_class = "col-md-10 offset-md-1";
+    $alpha_text_class   = "text-center";
 }
 ?>
 
 <?php get_header(); ?>
-
-<body <?php body_class(); ?>>
-    <?php get_template_part( "/template-parts/common/hero" ); ?>
+<body <?php body_class( array( "first_class", "second_class" ) ); ?>>
+<?php get_template_part( "/template-parts/common/hero" ); ?>
     <div class="container">
         <div class="row">
             <div class="<?php echo $alpha_layout_class; ?>">
@@ -21,73 +18,85 @@ if(is_active_sidebar("footer-left"))
                     while ( have_posts() ) :
                         the_post();
                         ?>
-                    <div <?php post_class(); ?>>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 <?php echo $alpha_text_class; ?>">
-                                    <h2 class="post-title">
-                                        <?php the_title(); ?>
-                                    </h2>
-                                    <p class="">
-                                        <em><?php the_author_posts_link(); ?></em><br />
-                                        <?php echo get_the_date(); ?>
-                                    </p>
+                        <div <?php post_class( array( "first_class", "second_class" ) ); ?>>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2 class="post-title <?php echo $alpha_text_class; ?>">
+                                            <?php the_title(); ?>
+                                        </h2>
+                                        <p class="<?php echo $alpha_text_class; ?>">
+                                            <em><?php the_author_posts_link(); ?></em><br/>
+                                            <?php echo get_the_date(); ?>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="slider">
-                                        <?php $attachments = new Attachments( 'attachments' ); /* pass the instance name */
-                                           if( $attachments->exist() ){
-                                                while( $attachment = $attachments->get() ) {
-                                                    ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="slider">
+                                            <?php
+                                            if ( class_exists( 'Attachments' ) ) {
+                                                $attachments = new Attachments( 'slider' );
+                                                if ( $attachments->exist() ) {
+                                                    while ( $attachment = $attachments->get() ) { ?>
+                                                        <div>
+                                                            <?php echo $attachments->image( 'large' ); ?>
+                                                            
+                                                        </div>
+                                                        
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </div>
                                         <div>
                                             <?php
-                                                 echo $attachments->image
-                                                 ?>
-                                        </div>
-                                        </li>
-                                        <?php
-                                                 } 
-                                                ?>
-                                        </ul>
-                                        <?php }
-                                            ?>
-                                    </div>
-                                    <p>
-                                        <?php
-                                            if ( has_post_thumbnail() ) {
-                                                $thumbnail_url = get_the_post_thumbnail_url(null,"large");
-                                                printf( '<a class="popup" href="%s" data-featherlight="image">',$thumbnail_url);
-                                                the_post_thumbnail( "large", array( "class" => "img-fluid" ) );
-                                                echo '</a>';
+                                            if ( !class_exists( 'Attachments' ) ) {
+                                                if ( has_post_thumbnail() ) {
+                                                    $thumbnail_url = get_the_post_thumbnail_url( null, "large" );
+                                                    printf( '<a class="popup" href="%s" data-featherlight="image">', $thumbnail_url );
+                                                    the_post_thumbnail( "large", array( "class" => "img-fluid" ) );
+                                                    echo '</a>';
+                                                }
                                             }
 
                                             the_content();
-
                                             wp_link_pages();
 
                                             ?>
-                                    </p>
-                                </div>
-                                <div class="col-md-10 offset-md-1">
-                                    <div class="row">
-                                        <div class="col-md-4">
-
                                         </div>
-                                        <div class="col-md-8"></div>
                                     </div>
-                                </div>
-                                <?php if ( comments_open() ): ?>
-                                <div class="col-md-10 offset-md-1">
-                                    <?php
+
+                                    <div class="authorsection">
+                                        <div class="row">
+                                            <div class="col-md-2 authorimage">
+                                                <?php
+                                                echo get_avatar( get_the_author_meta( "ID" ) );
+                                                ?>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h4>
+                                                    <?php echo get_the_author_meta( "display_name" ); ?>
+                                                </h4>
+                                                <p>
+                                                    <?php echo get_the_author_meta( "description" ); ?>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php if ( comments_open() ): ?>
+                                        <div class="col-md-12">
+                                            <?php
                                             //comments_template();
                                             ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
-                                <?php endif; ?>
                             </div>
                         </div>
-                    </div>
                     <?php
                     endwhile;
                     ?>
@@ -108,14 +117,18 @@ if(is_active_sidebar("footer-left"))
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                if ( is_active_sidebar( "footer-left" ) ) {
-                    dynamic_sidebar( "footer-left" );
-                }
+            <?php
+            if ( is_active_sidebar( "sidebar-1" ) ):
                 ?>
-            </div>
+                <div class="col-md-4">
+                    <?php
+                    if ( is_active_sidebar( "sidebar-1" ) ) {
+                        dynamic_sidebar( "sidebar-1" );
+                    }
+                    ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
-    <?php get_footer(); ?>
+<?php get_footer(); ?>
