@@ -36,16 +36,16 @@ get_header();
                                         while ( $attachment = $attachments->get() ) { ?>
                                             <div>
                                                 <p>
-                                                <?php echo $attachments->image( 'thumbnail' ); ?>                                                           
+                                                <?php echo ($attachments->image( 'thumbnail' )); ?>                                                           
                                             </p>
                                             <p>
-                                            <?php echo $attachments->field( 'testimonial' ); ?>   
+                                            <?php echo esc_html($attachments->field( 'testimonial' )); ?>   
                                             </p>
                                             <p>
-                                            <?php echo $attachments->field( 'name' ); ?>   
+                                            <?php echo esc_html($attachments->field( 'name' )); ?>   
                                             </p>
                                             <p>
-                                            <?php echo $attachments->field( 'position' ); ?>
+                                            <?php echo esc_html($attachments->field( 'position' ) );?>
                                             at <strong> <a href="<?php echo $attachments->field( 'companywebsite' ); ?>"><?php echo $attachments->field( 'company' ); ?></a></strong>   
                                             </p>
                                             </div>
@@ -57,6 +57,40 @@ get_header();
                         </div>
                     </div>
                 </div>
+                 
+                    <div class="row">                                                                 
+                        <?php
+                        if ( class_exists( 'Attachments' ) ) {
+                            $attachments = new Attachments( 'team' );
+                            if ( $attachments->exist() ) {
+                                while ( $attachment = $attachments->get() ) { ?>
+                                    <div class="col-md-4">
+                                        <div class="team">
+                                        <p>
+                                        <?php echo ($attachments->image( 'medium' )); ?>                                                           
+                                    </p>
+                                    <p>
+                                    <?php echo esc_html($attachments->field( 'position' )); ?>   
+                                    </p>
+                                    <p>
+                                    <?php echo esc_html($attachments->field( 'bio' )); ?>   
+                                    </p>
+                                    <p>
+                                    <?php echo esc_html($attachments->field( 'email' ) );?>
+                                    
+                                    </p>
+                                    </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                        }
+                        ?>
+
+
+                        </div>                    
+                 
+   
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <p>

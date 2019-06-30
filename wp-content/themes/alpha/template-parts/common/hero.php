@@ -25,3 +25,17 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <?php if(is_search()){ ?>
+                <h4>You searched for <?php the_search_query(); ?></h4>
+                <?php
+            } 
+
+            echo get_search_form();
+?>
+        </div>
+    </div>
+</div>

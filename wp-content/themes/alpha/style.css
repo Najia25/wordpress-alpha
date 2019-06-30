@@ -46,7 +46,7 @@ h2.post-title {
 
 .post .row:nth-child(2) {
     padding-bottom: 50px;
-    border-bottom: 1px solid #ccc;
+   
 
 }
 
@@ -136,7 +136,13 @@ h2.post-title {
 .testimonials img{
     border-radius:50%;
 }
+
 .tns-item a {
     color: #b55012b8;
+}
+
+.search-highlight{
+    background-color: #f8f415f6;
+    font-weight: bold;
 }
 

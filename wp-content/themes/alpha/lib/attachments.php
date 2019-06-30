@@ -2,6 +2,8 @@
 define( 'ATTACHMENTS_SETTINGS_SCREEN', false ); // disable the Settings screen
 add_filter( 'attachments_default_instance', '__return_false' ); // disable the default instance
 
+/* Slider */
+
 function alpha_attachments($attachments){
     $fields = array(
         array(
@@ -36,6 +38,8 @@ function alpha_attachments($attachments){
 
 add_action( 'attachments_register', 'alpha_attachments' );
 
+
+/* Testimonials */
 
 function alpha_testimonial_attachments($attachments){
     $fields = array(
@@ -91,5 +95,58 @@ function alpha_testimonial_attachments($attachments){
 }
 
 add_action( 'attachments_register', 'alpha_testimonial_attachments' );
+
+/* Team */
+
+function alpha_team_attachments($attachments){
+    $fields = array(
+        array(
+            'name'=> 'name',
+            'type' => 'text',
+            'label' =>__('Name','alpha'),
+        ),
+        array(
+            'name'=> 'position',
+            'type' => 'text',
+            'label' =>__('Position','alpha'),
+        ),
+      
+        array(
+            'name'=> 'bio',
+            'type' => 'textarea',
+            'label' =>__('Bio','alpha'),
+        ),
+        array(
+            'name'=> 'email',
+            'type' => 'text',
+            'label' =>__('Email','alpha'),
+        ),
+       
+    );
+
+    $args = array(
+         // title of the meta box (string)
+    'label'         => 'Team',
+
+    // all post types to utilize (string|array)
+    'post_type'     => array( 'page'),
+
+    // allowed file type(s) (array) (image|video|text|audio|application)
+    'filetype'      => array("image"),  // no filetype limit
+
+    // include a note within the meta box (string)
+    'note'          => 'Add team members',
+
+    // text for 'Attach' button in meta box (string)
+    'button_text'   => __( 'Attach Files', 'alpha' ),
+
+    // fields array
+    'fields'        => $fields,
+    );
+
+    $attachments->register( 'team', $args ); // unique instance name
+}
+
+add_action( 'attachments_register', 'alpha_team_attachments' );
 
 
