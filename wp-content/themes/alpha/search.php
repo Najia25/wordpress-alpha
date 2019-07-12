@@ -11,8 +11,7 @@
                  <h4><?php _e("No results found","alpha"); ?></h4>
                  </div>
              </div>
-         </div>
-       
+         </div>      
         <?php
      }
     ?>
