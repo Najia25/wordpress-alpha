@@ -43,13 +43,23 @@ All notable changes to this project will be documented in this file.
 - function overwriting in functions.php:
   The function first loads from child theme. so if want to overwrite the same function that already exists in parent theme fatal error gives about redefining the same function.
   To avoid this, add filters to parent theme functions if(!function_exists(function name)){}
-- if child theme is used, the functions from child theme loads first by default.if want child theme functions to     load AFTER PARENT, set higher priority to the function from child theme.
+- if child theme is used, the functions from child theme loads first by default.if want child theme functions to load AFTER PARENT, set higher priority to the function from child theme.
   default priority for a function in parent theme is 10.
   if use get_theme_file_uri(),this problem doesnt happen but most themes use get_template_directory_uri
-- for asset management if want some resource for example, a css file to load from a different location first         dequeue and deregister from the previous location.
+- for asset management if want some resource for example, a css file to load from a different location first dequeue and deregister from the previous location.
   wp_dequeue_style(name);
   wp_deregister_style(name);
 
+  
+ ## [v-8] - 2019-07-08
+
+** comment template
+
+- load comment template comment_template() after checking whether post is password protected.If comments are disabled form dashboard still load comment template with existing comments. then show message "comments are closed"
+- print_r() php function prints human readable information about an object
+- add function comments_template(); this displays comments.php.
+- May follow bootstrap media object for creating the markup for commenting structure.But handling threading of commenting becomes        harder.so better follow wp_list_comments().
+- check whether commenting is allowed from screen options > discussion > allow comments with comments_open().
 
 
 

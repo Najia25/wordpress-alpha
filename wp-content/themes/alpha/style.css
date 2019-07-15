@@ -124,17 +124,21 @@ h2.post-title {
 }
 .author-img{
  text-align: center;
-}
-
-
-.author-img img{
-    height:80px;
+ height:80px;
     width:80px;
     border-radius:50%;
 }
 
+
+.authorimage img{
+    
+    border-radius:50%;
+  
+}
+
 .testimonials img{
     border-radius:50%;
+   
 }
 
 .tns-item a {
